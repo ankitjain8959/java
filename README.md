@@ -229,7 +229,9 @@ System.out.println(add.apply(5, 7));  // 12
 `Stream pipelines` means a sequence of operations (intermediate + terminal) that are performed on the data in the stream.  
 A stream pipeline consists of a source, zero or more intermediate operations, and a terminal operation.  
 - **Source**: The data source from which the stream is created (e.g., a collection, array, or I/O channel).  
-- **Intermediate Operations**: Operations that transform the stream into another stream. They are lazy and do not produce a result until a terminal operation is invoked. Examples include `filter`, `map`, and `sorted`.  
+- **Intermediate Operations**: Operations that transform the stream into another stream. They are lazy and do not produce a result until a terminal operation is invoked. Examples include `filter`, `map`, `flatmap`, `sorted`.  
+  - **Stateless Intermediate Operations**: These operations do not depend on the state of the stream and can be applied independently to each element. Examples include `filter`, `map`, and `sorted`.
+  - **Stateful Intermediate Operations**: These operations require knowledge of the entire stream to produce a result. Examples include `distinct`, `sorted`, and `limit`.  
 - **Terminal Operation**: An operation that produces a result or a side effect, such as `forEach`, `collect`, or `reduce`. Terminal operations can be further categorized into:  
   - **Non-Short-Circuiting Operations**: These operations process all elements in the stream and produce a result. Examples include `collect`, `reduce`, and `toArray`.
   - **Short-Circuiting Operations**: Some terminal operations can short-circuit the processing of the stream, meaning they can stop processing as soon as a certain condition is met. Examples include `findFirst`, `anyMatch`, and `allMatch`.
@@ -312,4 +314,14 @@ Type | Description                                                              
 2. Immutable Objects: Cannot be changed after creation (e.g., String, Integer). Used in reduce() to ensure thread safety and avoid side effects.
 
 ### Intermediate Operations on Streams
+Type | Description                                                                             | Example |
+|----------------|-----------------------------------------------------------------------------------------|----------------|
+| **filter** | Filters elements based on a predicate, returning a new stream with matching elements. | `Stream<String> filtered = stream.filter(s -> s.startsWith("A"));` |
+| **distinct** | Removes duplicate elements from the stream, returning a new stream with unique elements. | `Stream<String> distinct = stream.distinct();` |
+| **map** | Transforms each element using a function, returning a new stream with transformed elements. | `Stream<Integer> lengths = stream.map(String::length);` |
+| **flatMap** | Flattens nested streams into a single stream, useful for handling collections of collections. | `Stream<String> flatMapped = stream.flatMap(s -> Arrays.stream(s.split(" ")));` |
+| **sorted** | Sorts the elements of the stream in natural order or using a comparator. | `Stream<String> sorted = stream.sorted();` |
+| **limit** | Limits the number of elements in the stream to a specified count. | `Stream<String> limited = stream.limit(5);` |
+| **skip** | Skips the first n elements of the stream, returning a new stream with the remaining elements. | `Stream<String> skipped = stream.skip(3);` |
+| **peek** | Performs an action on each element of the stream without modifying it, useful for debugging. | `stream.peek(System.out::println);` |
 

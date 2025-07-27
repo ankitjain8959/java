@@ -19,13 +19,15 @@ import java.util.stream.Stream;
  * **Key Concepts:**
  * - Terminal operations trigger the processing of the stream pipeline.
  * - Intermediate operations (e.g., `filter`, `map`) are lazy and do not produce results until a terminal operation is invoked.
- * - Streams are consumed after a terminal operation and cannot be reused.
+ * - Streams are consumed after a terminal operation and streams cannot be reused.
  * - Terminal operations can be used without any intermediate operations, but intermediate operations cannot be used without a terminal operation because they do not produce a result until a terminal operation is invoked.
  *
+ * <pre>
  * **Examples:**
  * - Concatenating strings using `reduce()`.
  * - Calculating the average of numeric values using `average()`.
  * - Collecting elements into a `List`, `Map`, or `Set` using `collect()`.
+ *</pre>
  *
  * **Dependencies:**
  * - Java Streams API
@@ -115,7 +117,7 @@ public class TerminalOperations {
   }
 
   /**
-    collect() is a terminal operation that transforms the elements of a stream into a different form, usually a collection such as a List, Set, or Map. (Also, a reduction operation)
+    collect() is a terminal operation that transforms the elements of a stream into a different form, usually a collection such as a List, Set, or Map. (It is also a reduction operation)
 
    1. Signature of collect() with a Supplier, Accumulator, and Combiner:
    <R> R collect(Supplier<R> supplier, BiConsumer<R, ? super T> accumulator, BiConsumer<R, R> combiner);
@@ -144,7 +146,7 @@ public class TerminalOperations {
 
     // Collectors.joining: Using collect() with a predefined collector (Collectors.joining) - to collect String and join them into a single String
     String stringJoining = Stream.of("Ankit", "Dimple")
-        .collect(Collectors.joining(", "));
+        .collect(Collectors.joining(", ", "[", "]"));
     System.out.println("Collected String using joining(): " + stringJoining);
 
 
@@ -188,8 +190,7 @@ public class TerminalOperations {
     // groupingBy returns a Map where the keys are the result of applying the classifier function (in this case, the length of the String) and the values are Lists of items that match the key. But, the returned map is usually a HashMap, unless specified otherwise.
     var groupedByLength = Stream.of("Ankit", "Dimple", "Carry", "John", "Carry")
         .collect(Collectors.groupingBy        // Grouping by takes in a Function that determines the keys in the Map, and the values are List (default, but can be changed) of entries that matches the key
-            (s -> s.length()
-            ));
+            (s -> s.length()));
     System.out.println("Grouped by Length: " + groupedByLength);
     System.out.println("Grouped by Length - returned Class: " + groupedByLength.getClass());
 
