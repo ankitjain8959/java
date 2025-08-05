@@ -16,6 +16,7 @@ public class StringTest {
     System.out.println("Check if two strings are Anagram: " + cj.anagram());
     System.out.println("Only Duplicate Element and it's count:" + cj.findDuplicateElements());
     System.out.println("Count Elements:" + cj.countAllElement());
+    System.out.println("Reverse String:" + cj.reverseStringWithoutStringBuilder("Ankit Dimple"));
   }
 
   public String joinStringAndAddPrefixSuffix() {
@@ -65,5 +66,20 @@ public class StringTest {
     List<String> names = Arrays.asList("AA", "BB", "AA", "CC");
     return names.stream()
         .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+  }
+
+  public String reverseStringWithoutStringBuilder(String str) {
+//    StringBuilder sb = new StringBuilder(str).reverse();
+//    return sb.toString();
+
+    char[] reversed = new char[str.length()];
+    char[] ch = str.toCharArray();
+    int lastIndex = ch.length - 1;
+
+    for(int i=0; i<=lastIndex; i++) {
+      reversed[i] = ch[lastIndex-i];
+    }
+
+    return new String(reversed);
   }
 }
