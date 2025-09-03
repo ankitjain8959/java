@@ -1,4 +1,4 @@
-package com.ankit.practice;
+package com.ankit.practice.stream;
 
 import java.util.Arrays;
 import java.util.List;
